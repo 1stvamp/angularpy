@@ -1,0 +1,47 @@
+# coding: utf-8
+
+"""angularpy is a python data structure for parsing and working with XML,
+based on PHP5's SimpleXML.
+"""
+__author__ = 'Wesley Mason<wes [at] 1stvamp [dot] org'
+__docformat__ = 'restructuredtext en'
+__version__ = '1.0b1'
+
+import sys
+from lxml import etree
+
+if not hasattr(sys, "hexversion") or sys.hexversion < 0x020700f0:
+    from ordereddict import OrderedDict
+else:
+    from collections import OrderedDict
+
+class SimpleXML(OrderedDict):
+    doc = None
+    attrs = []
+    dict_data = {}
+
+    def __init__(self, doc=None, attrs=None, dict_data=None):
+        if doc:
+            self.doc = doc
+            if attrs:
+                self.attrs = attrs
+            # Grab dict_data here
+        if not self.dict_data and dict_data:
+            self.dict_data = dict_data
+
+    @classmethod
+    def fromstring(cls, string):
+        return super(SimpleXML, cls).__init__(doc=etree.fromstring(string))
+
+    @classmethod
+    def parse(cls, location):
+        return super(SimpleXML, cls).__init__(doc=etree.parse(location))
+
+    @classmethod
+    def fromsimple(cls, simple_xml_instance):
+        return super(SimpleXML, cls).__init__(
+                    doc=simple_xml_instance.doc,
+                    attrs=simple_xml_instance.attrs,
+                    dict_data=simple_xml_instance.dict_data
+                )
+
