@@ -18,16 +18,16 @@ else:
 class SimpleXML(OrderedDict):
     doc = None
     attrs = []
-    dict_data = {}
+    data_dict = {}
 
-    def __init__(self, doc=None, attrs=None, dict_data=None):
+    def __init__(self, doc=None, attrs=None, data_dict=None):
         if doc:
             self.doc = doc
             if attrs:
                 self.attrs = attrs
-            # Grab dict_data here
-        if not self.dict_data and dict_data:
-            self.dict_data = dict_data
+            # Grab data_dict here
+        if not self.data_dict and data_dict:
+            self.data_dict = data_dict
 
     @classmethod
     def fromstring(cls, string):
@@ -42,6 +42,12 @@ class SimpleXML(OrderedDict):
         return super(SimpleXML, cls).__init__(
                     doc=simple_xml_instance.doc,
                     attrs=simple_xml_instance.attrs,
-                    dict_data=simple_xml_instance.dict_data
+                    data_dict=simple_xml_instance.data_dict
+                )
+
+    @classmethod
+    def fromdict(cls, data_dict):
+        return super(SimpleXML, cls).__init__(
+                    data_dict=data_dict
                 )
 
