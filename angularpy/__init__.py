@@ -18,7 +18,13 @@ else:
 class SimpleXML(OrderedDict):
     doc = None
     attrs = []
-    data_dict = {}
+    __data_dict = {}
+
+    def _get_data_dict(self):
+        return self.__data_dict
+    def _set_data_dict(self, data_dict):
+        self.__data_dict = data_dict
+    data_dict = property(_get_data_dict, _set_data_dict)
 
     def __init__(self, doc=None, attrs=None, data_dict=None):
         if doc:
@@ -30,15 +36,15 @@ class SimpleXML(OrderedDict):
             self.data_dict = data_dict
 
     @classmethod
-    def fromstring(cls, string):
-        return super(SimpleXML, cls).__init__(doc=etree.fromstring(string))
-
-    @classmethod
     def parse(cls, location):
         return super(SimpleXML, cls).__init__(doc=etree.parse(location))
 
     @classmethod
-    def fromsimple(cls, simple_xml_instance):
+    def from_string(cls, string):
+        return super(SimpleXML, cls).__init__(doc=etree.fromstring(string))
+
+    @classmethod
+    def from_simple(cls, simple_xml_instance):
         return super(SimpleXML, cls).__init__(
                     doc=simple_xml_instance.doc,
                     attrs=simple_xml_instance.attrs,
@@ -46,7 +52,7 @@ class SimpleXML(OrderedDict):
                 )
 
     @classmethod
-    def fromdict(cls, data_dict):
+    def from_dict(cls, data_dict):
         return super(SimpleXML, cls).__init__(
                     data_dict=data_dict
                 )
