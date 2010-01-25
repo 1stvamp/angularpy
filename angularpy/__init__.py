@@ -15,7 +15,7 @@ if not hasattr(sys, "hexversion") or sys.hexversion < 0x020700f0:
 else:
     from collections import OrderedDict
 
-# TODO: implement __iter__(), __reversed__(), get() and has_key()
+# TODO: override __iter__(), __reversed__(), keys(), values(), get() and has_key()
 
 class SimpleXML(OrderedDict):
     doc = None
