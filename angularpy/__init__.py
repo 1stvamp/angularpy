@@ -18,6 +18,7 @@ else:
 class SimpleXML(OrderedDict):
     doc = None
     attrs = []
+    selector = []
     __data_dict = {}
 
     def _get_data_dict(self):
@@ -26,7 +27,7 @@ class SimpleXML(OrderedDict):
         self.__data_dict = data_dict
     data_dict = property(_get_data_dict, _set_data_dict)
 
-    def __init__(self, doc=None, attrs=None, data_dict=None):
+    def __init__(self, doc=None, attrs=None, data_dict=None, selector=None):
         if doc:
             self.doc = doc
             if attrs:
@@ -34,6 +35,8 @@ class SimpleXML(OrderedDict):
             # Grab data_dict here
         if not self.data_dict and data_dict:
             self.data_dict = data_dict
+        if selector:
+            self.selector = selector
 
     @classmethod
     def parse(cls, location):
@@ -56,4 +59,9 @@ class SimpleXML(OrderedDict):
         return super(SimpleXML, cls).__init__(
                     data_dict=data_dict
                 )
+
+    @property
+    def value(self):
+        return
+
 
